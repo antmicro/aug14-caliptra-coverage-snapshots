@@ -1,0 +1,22 @@
+name: Build index
+on:
+  push:
+jobs:
+ docs-build:
+    runs-on: ubuntu-latest
+    env:
+      DEBIAN_FRONTEND: "noninteractive"
+    steps:
+      - name: Setup repository
+        uses: actions/checkout@v4
+
+      - name: Build index
+        run: |
+          ./build.sh
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: .
+
